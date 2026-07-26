@@ -1,0 +1,31 @@
+server:
+  port: 5143
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        # Route Group 1: Identity and Camp Service
+        - id: identity-camp-route
+          uri: lb://identity-camp-service
+          predicates:
+            - Path=/api/auth/**, /api/users/**, /api/camps/**, /api/resources/**, /api/tasks/**, /api/volunteers/**
+
+        # Route Group 2: Disaster and Emergency Service
+        - id: disaster-emergency-route
+          uri: lb://disaster-emergency-service
+          predicates:
+            - Path=/api/disasters/**, /api/sos/**, /api/missing-persons/**, /api/hazard-reports/**, /api/forecast/**, /api/notifications/**, /api/contact/**, /api/gov/**, /api/ngo/**, /api/volunteer/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
