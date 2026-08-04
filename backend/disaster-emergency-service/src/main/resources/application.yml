@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: disaster-emergency-service
+  jackson:
+    time-zone: Asia/Kolkata
   data:
     mongodb:
       uri: mongodb://localhost:27017/resq_emergency_db
@@ -20,3 +22,9 @@ eureka:
 
 jwt:
   secret: SuperSecretKeyForResQConnectDevDeployment2026
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health
